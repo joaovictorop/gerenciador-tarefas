@@ -3,6 +3,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTRPC } from "@/trpc/client";
 import { useState } from "react";
+import Link from "next/link";
 
 type Mensagem = { tipo: "sucesso" | "erro"; texto: string } | null;
 
@@ -73,6 +74,7 @@ export function ListaTarefas() {
                   timeZone: "America/Fortaleza",
                 })}
               </p>
+              <Link href={`/tarefas/${tarefa.id}/editar`}>Editar</Link>{" "}
               <button
                 type="button"
                 disabled={remover.isPending}
