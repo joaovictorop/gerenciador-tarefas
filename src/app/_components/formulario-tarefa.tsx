@@ -25,6 +25,7 @@ export function FormularioTarefa({ tarefa }: { tarefa?: Tarefa }) {
   const onError = (
     erro: { data?: { code?: string } | null; message: string },
   ) => {
+    // A mensagem do Zod chega como JSON difícil de ler, então BAD_REQUEST recebe um texto simples.
     setMensagem({
       tipo: "erro",
       texto: erro.data?.code === "BAD_REQUEST" ? "Dados inválidos" : erro.message,

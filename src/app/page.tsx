@@ -2,6 +2,7 @@ import { getQueryClient, HydrateClient, trpc } from "@/trpc/server";
 import { ListaTarefas } from "./_components/lista-tarefas";
 import Link from "next/link";
 
+// Sem isso, a home poderia ser gerada no build (SSG), em vez de a cada requisição (SSR).
 export const dynamic = "force-dynamic";
 
 export default async function Home() {

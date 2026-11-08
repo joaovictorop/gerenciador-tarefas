@@ -1,5 +1,6 @@
 import type { Tarefa } from "./tarefa.types";
 
+// O globalThis preserva a lista durante o hot reload e entre a rota da API e o SSR da página.
 const globalTarefas = globalThis as unknown as {
     tarefas?: Tarefa[];
 };
@@ -41,6 +42,7 @@ export function atualizarTarefa(
         return undefined;
     }
 
+    // Atribuir os campos explicitamente também permite apagar uma descrição existente.
     const atualizado = {
         ...tarefas[indice], titulo: novosDados.titulo,
         descricao: novosDados.descricao,
