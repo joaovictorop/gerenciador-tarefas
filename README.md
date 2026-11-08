@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Gerenciador de Tarefas
 
-## Getting Started
+Aplicação web para criar, listar, editar e remover tarefas. O projeto usa
+renderização no servidor para carregar a lista inicial e tRPC para conectar a
+interface às operações do servidor.
 
-First, run the development server:
+## Tecnologias
+
+- Next.js 15 (App Router)
+- tRPC v11
+- TanStack Query
+- Zod
+- TypeScript
+
+## Como executar
+
+Pré-requisito: Node.js 20 ou superior.
 
 ```bash
+git clone https://github.com/joaovictorop/gerenciador-tarefas
+cd gerenciador-tarefas
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Acesse http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Estrutura
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```text
+src/
+├── app/          # páginas e componentes
+├── server/       # tRPC: routers, schemas e armazenamento
+└── trpc/         # configuração do cliente e do servidor
+```
 
-## Learn More
+## Decisões
 
-To learn more about Next.js, take a look at the following resources:
+Os dados ficam em memória usando `globalThis`, mantendo a implementação
+simples e sem exigir um banco de dados para este case. A home usa SSR com
+`force-dynamic`, para buscar a lista atualizada a cada requisição. Os dados
+são validados no formulário antes do envio e novamente no backend com Zod. Os
+erros de domínio usam `TRPCError`, com códigos apropriados como `NOT_FOUND`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Limitações
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Os dados somem quando o servidor é reiniciado, pois ainda não existe uma
+persistência em banco de dados. O infinite scroll, item bônus, não foi
+implementado e fica como próxima melhoria.
